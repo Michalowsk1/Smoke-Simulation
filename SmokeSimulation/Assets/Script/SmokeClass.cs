@@ -9,7 +9,7 @@ public class SmokeClass : MonoBehaviour
     SpriteRenderer spriteRenderer;
 
     [Header("Movement Variables")]
-    public Vector2 windDir;
+    public Vector2 randDir;
     public float randRange;
 
     [Header("Transparency Variables")]
@@ -28,8 +28,8 @@ public class SmokeClass : MonoBehaviour
     {
         SetUpBodies();
 
-        windDir = new Vector2(1, 1);
-        randRange = 1;
+        randRange = 0.1f;
+        randDir = new Vector2(-randRange, randRange);
         randSpawnRange = 0.01f;
         alphaDecreaser = 0.01f; //will base this off movement speed later
         spreadDecrease = 0.01f;
@@ -43,7 +43,7 @@ public class SmokeClass : MonoBehaviour
         {
             ManageMovement();
             ManageTransparency();
-            ManageSpread();
+            //ManageSpread();
             ManageDeletion();
         }
     }
@@ -62,14 +62,18 @@ public class SmokeClass : MonoBehaviour
 
     void ManageMovement()
     {
-        rigidBody2D.linearVelocity = new Vector2(windDir.x + Random.Range(-randRange, randRange), windDir.y + Random.Range(-randRange, randRange));
+        rigidBody2D.linearVelocity = new Vector2(WindSystem.windDir.x + randDir.x, WindSystem.windDir.y + randDir.y);
     }
 
     void ManageSpread()
     {
-            GameObject newSmoke = Instantiate(Smoke, new Vector2(transform.position.x + randSpawnRange, transform.position.y + randSpawnRange), Quaternion.identity);
-            SpriteRenderer newSp = newSmoke.GetComponent<SpriteRenderer>();
-            newSp.color = new Color(1, 1, 1, currAlpha - spreadDecrease);
+        GameObject newSmoke = Instantiate(Smoke, new Vector2(transform.position.x + randSpawnRange, transform.position.y + randSpawnRange), Quaternion.identity);
+
+        Rigidbody2D rb = newSmoke.GetComponent<Rigidbody2D>();
+        rb.linearVelocity = new Vector2(rigidBody2D.linearVelocity.x + Random.Range(-randRange, randRange), rigidBody2D.linearVelocity.y + Random.Range(-randRange, randRange));
+
+        SpriteRenderer newSp = newSmoke.GetComponent<SpriteRenderer>();
+        newSp.color = new Color(1, 1, 1, currAlpha - spreadDecrease);
     }
 
     void ManageDeletion()

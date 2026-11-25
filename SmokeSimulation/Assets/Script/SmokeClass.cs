@@ -15,6 +15,7 @@ public class SmokeClass : MonoBehaviour
     [Header("Transparency Variables")]
     public float currAlpha;
     public float alphaDecreaser;
+    public float alphaDecreaserIncrement;
 
     [Header("Sreading Variables")]
     public float spreadDecrease;
@@ -32,7 +33,8 @@ public class SmokeClass : MonoBehaviour
 
         randSpawnRange = 0.001f; //how far it spawns from the smoke particle it spawns from
 
-        alphaDecreaser = 0.0025f; //will base this off movement speed later
+        alphaDecreaser = 0.0025f; //based off movement speed
+        alphaDecreaserIncrement = 0.0075f;
 
         spreadDecrease = 0.0075f; //how much alpha is decreased from new smoke particle
     }
@@ -58,23 +60,29 @@ public class SmokeClass : MonoBehaviour
     {
         currAlpha = gameObject.GetComponent<SpriteRenderer>().color.a - alphaDecreaser;
         spriteRenderer.color = new Color(1, 1, 1, currAlpha);
+
+        alphaDecreaser = (alphaDecreaserIncrement * GetMagnitude(rigidBody2D.linearVelocityX, rigidBody2D.linearVelocityY) + Random.Range(0,0.001f));
     }
 
     void ManageMovement()
     {
-        rigidBody2D.linearVelocity = new Vector2(rigidBody2D.linearVelocityX + (WindSystem.windInfluence.x), rigidBody2D.linearVelocityY + (WindSystem.windInfluence.y));
+        rigidBody2D.linearVelocity = new Vector2(rigidBody2D.linearVelocityX + WindSystem.windInfluence.x, rigidBody2D.linearVelocityY + WindSystem.windInfluence.y);
     }
 
     void ManageSpread()
     {
-        GameObject newSmoke = Instantiate(Smoke, new Vector2(transform.position.x + randSpawnRange, transform.position.y + randSpawnRange), Quaternion.identity);
+        if (spriteRenderer.color.a > 0.15)
+        {
+            GameObject newSmoke = Instantiate(Smoke, new Vector2(transform.position.x + randSpawnRange, transform.position.y + randSpawnRange), Quaternion.identity);
+            currAlpha = currAlpha - 0.01f;
 
-        randDir = new Vector2(Random.Range(-randRange, randRange), Random.Range(-randRange, randRange));
-        Rigidbody2D newrb = newSmoke.GetComponent<Rigidbody2D>();
-        newrb.linearVelocity = new Vector2((rigidBody2D.linearVelocityX + randDir.x), rigidBody2D.linearVelocityY + randDir.y);
+            randDir = new Vector2(Random.Range(-randRange, randRange), Random.Range(-randRange, randRange));
+            Rigidbody2D newrb = newSmoke.GetComponent<Rigidbody2D>();
+            newrb.linearVelocity = new Vector2(rigidBody2D.linearVelocityX + randDir.x, rigidBody2D.linearVelocityY + randDir.y);
 
-        SpriteRenderer newSp = newSmoke.GetComponent<SpriteRenderer>();
-        newSp.color = new Color(1, 1, 1, currAlpha - spreadDecrease);
+            SpriteRenderer newSp = newSmoke.GetComponent<SpriteRenderer>();
+            newSp.color = new Color(1, 1, 1, currAlpha - spreadDecrease);
+        }
     }
 
     void ManageDeletion()
@@ -83,5 +91,10 @@ public class SmokeClass : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    float GetMagnitude(float x, float y)
+    {
+        return Mathf.Sqrt((x * x) + (y * y));
     }
 }

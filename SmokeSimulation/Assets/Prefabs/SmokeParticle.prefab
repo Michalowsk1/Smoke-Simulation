@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7543011277853918133}
+  - component: {fileID: 7205265509429936971}
   - component: {fileID: 602781450253969269}
   - component: {fileID: 1361413878156864887}
-  - component: {fileID: 7205265509429936971}
   m_Layer: 0
   m_Name: SmokeParticle
   m_TagString: Untagged
@@ -34,6 +34,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7205265509429936971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4105944772205854472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d222f31cd0c59e4e9383ca25fb8ff80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SmokeClass
+  Smoke: {fileID: 4105944772205854472}
+  windDir: {x: 1, y: 1}
+  randRange: 1
+  currAlpha: 0
+  alphaDecreaser: 0.01
+  spreadDecrease: 0.01
+  randSpawnRange: 0.01
+  currentAmmountOfParticles: 0
+  maxAmmountOfParticles: 100
 --- !u!212 &602781450253969269
 SpriteRenderer:
   serializedVersion: 2
@@ -120,19 +141,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &7205265509429936971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4105944772205854472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d222f31cd0c59e4e9383ca25fb8ff80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SmokeClass
-  windDir: {x: 0, y: 0}
-  randRange: 0
-  currAlpha: 0
-  alphaDecreaser: 0

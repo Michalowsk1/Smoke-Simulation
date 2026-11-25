@@ -28,13 +28,13 @@ public class SmokeClass : MonoBehaviour
     {
         SetUpBodies();
 
-        randRange = 0.01f; //which direction it moves
+        randRange = 0.025f; //which direction it moves
 
         randSpawnRange = 0.001f; //how far it spawns from the smoke particle it spawns from
 
-        alphaDecreaser = 0.005f; //will base this off movement speed later
+        alphaDecreaser = 0.0025f; //will base this off movement speed later
 
-        spreadDecrease = 0.01f; //how much alpha is decreased from new smoke particle
+        spreadDecrease = 0.0075f; //how much alpha is decreased from new smoke particle
     }
 
     // Update is called once per frame

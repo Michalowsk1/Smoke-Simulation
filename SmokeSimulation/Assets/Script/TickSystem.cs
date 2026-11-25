@@ -7,16 +7,16 @@ public class TickSystem : MonoBehaviour
 
     public float timeForTickInSeconds;
     private float currentTime;
-    private bool TickChanged;
 
     void Start()
     {
-        timeForTickInSeconds = 1.0f;
+        timeForTickInSeconds = 0.01f;
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(HasTickChanged());
         Timer();
     }
 

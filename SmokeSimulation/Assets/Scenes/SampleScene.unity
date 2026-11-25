@@ -301,6 +301,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &751229625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 751229627}
+  - component: {fileID: 751229626}
+  m_Layer: 0
+  m_Name: WindSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &751229626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751229625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e8e40cb8f1a4a744afcfba9a4cd297b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WindSystem
+  windDir: {x: 0, y: 0}
+  windIntensity: 0
+--- !u!4 &751229627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751229625}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.13634, y: 2.07043, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &807128348
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -312,6 +358,22 @@ PrefabInstance:
     - target: {fileID: 4105944772205854472, guid: 1b5980f5cd92b3242811030f38bcd8d2, type: 3}
       propertyPath: m_Name
       value: SmokeParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205265509429936971, guid: 1b5980f5cd92b3242811030f38bcd8d2, type: 3}
+      propertyPath: randRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205265509429936971, guid: 1b5980f5cd92b3242811030f38bcd8d2, type: 3}
+      propertyPath: alphaDecreaser
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205265509429936971, guid: 1b5980f5cd92b3242811030f38bcd8d2, type: 3}
+      propertyPath: randSpawnRange
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7205265509429936971, guid: 1b5980f5cd92b3242811030f38bcd8d2, type: 3}
+      propertyPath: spreadDecrease
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 7543011277853918133, guid: 1b5980f5cd92b3242811030f38bcd8d2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -365,3 +427,4 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 807128348}
   - {fileID: 211684500}
+  - {fileID: 751229627}

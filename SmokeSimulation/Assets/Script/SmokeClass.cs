@@ -28,24 +28,24 @@ public class SmokeClass : MonoBehaviour
     {
         SetUpBodies();
 
-        randRange = 0.1f;
-        randDir = new Vector2(-randRange, randRange);
-        randSpawnRange = 0.01f;
-        alphaDecreaser = 0.01f; //will base this off movement speed later
-        spreadDecrease = 0.01f;
+        randRange = 0.01f; //which direction it moves
 
+        randSpawnRange = 0.001f; //how far it spawns from the smoke particle it spawns from
+
+        alphaDecreaser = 0.005f; //will base this off movement speed later
+
+        spreadDecrease = 0.01f; //how much alpha is decreased from new smoke particle
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        ManageMovement();
+        ManageTransparency();
+        ManageDeletion();
+
         if (TickSystem.HasTickChanged())
-        {
-            ManageMovement();
-            ManageTransparency();
-            //ManageSpread();
-            ManageDeletion();
-        }
+            ManageSpread();
     }
 
     void SetUpBodies()
@@ -62,15 +62,16 @@ public class SmokeClass : MonoBehaviour
 
     void ManageMovement()
     {
-        rigidBody2D.linearVelocity = new Vector2(WindSystem.windDir.x + randDir.x, WindSystem.windDir.y + randDir.y);
+        rigidBody2D.linearVelocity = new Vector2(rigidBody2D.linearVelocityX + (WindSystem.windInfluence.x), rigidBody2D.linearVelocityY + (WindSystem.windInfluence.y));
     }
 
     void ManageSpread()
     {
         GameObject newSmoke = Instantiate(Smoke, new Vector2(transform.position.x + randSpawnRange, transform.position.y + randSpawnRange), Quaternion.identity);
 
-        Rigidbody2D rb = newSmoke.GetComponent<Rigidbody2D>();
-        rb.linearVelocity = new Vector2(rigidBody2D.linearVelocity.x + Random.Range(-randRange, randRange), rigidBody2D.linearVelocity.y + Random.Range(-randRange, randRange));
+        randDir = new Vector2(Random.Range(-randRange, randRange), Random.Range(-randRange, randRange));
+        Rigidbody2D newrb = newSmoke.GetComponent<Rigidbody2D>();
+        newrb.linearVelocity = new Vector2((rigidBody2D.linearVelocityX + randDir.x), rigidBody2D.linearVelocityY + randDir.y);
 
         SpriteRenderer newSp = newSmoke.GetComponent<SpriteRenderer>();
         newSp.color = new Color(1, 1, 1, currAlpha - spreadDecrease);

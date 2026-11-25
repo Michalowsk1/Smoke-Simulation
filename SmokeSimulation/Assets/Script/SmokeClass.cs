@@ -21,9 +21,6 @@ public class SmokeClass : MonoBehaviour
     public float spreadDecrease;
     public float randSpawnRange;
 
-    public int currentAmmountOfParticles;
-    public int maxAmmountOfParticles;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -73,7 +70,7 @@ public class SmokeClass : MonoBehaviour
     {
         if (spriteRenderer.color.a > 0.15)
         {
-            GameObject newSmoke = Instantiate(Smoke, new Vector2(transform.position.x + randSpawnRange, transform.position.y + randSpawnRange), Quaternion.identity);
+            GameObject newSmoke = Instantiate(Smoke, new Vector2(transform.position.x + Random.Range(-randSpawnRange, randSpawnRange), transform.position.y + Random.Range(-randSpawnRange, randSpawnRange)), Quaternion.identity);
             currAlpha = currAlpha - 0.01f;
 
             randDir = new Vector2(Random.Range(-randRange, randRange), Random.Range(-randRange, randRange));

@@ -47,12 +47,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SmokeClass
   Smoke: {fileID: 4105944772205854472}
-  windDir: {x: 1, y: 1}
-  randRange: 1
+  randDir: {x: 0, y: 0}
+  randRange: 0.025
   currAlpha: 0
-  alphaDecreaser: 0.01
-  spreadDecrease: 0.01
-  randSpawnRange: 0.01
+  alphaDecreaser: 0.0025
+  alphaDecreaserIncrement: 0.0075
+  spreadDecrease: 0.0075
+  randSpawnRange: 0.001
   currentAmmountOfParticles: 0
   maxAmmountOfParticles: 100
 --- !u!212 &602781450253969269

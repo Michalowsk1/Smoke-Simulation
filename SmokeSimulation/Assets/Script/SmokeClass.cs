@@ -32,22 +32,20 @@ public class SmokeClass : MonoBehaviour
         randRange = 1;
         randSpawnRange = 0.01f;
         alphaDecreaser = 0.01f; //will base this off movement speed later
+        spreadDecrease = 0.01f;
 
-        currentAmmountOfParticles = 0;
-        maxAmmountOfParticles = 100;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
-        ManageMovement();
-
-        ManageTransparency();
-
-        ManageSpread();
-
-        ManageDeletion();
+        if (TickSystem.HasTickChanged())
+        {
+            ManageMovement();
+            ManageTransparency();
+            ManageSpread();
+            ManageDeletion();
+        }
     }
 
     void SetUpBodies()
@@ -69,13 +67,9 @@ public class SmokeClass : MonoBehaviour
 
     void ManageSpread()
     {
-        if (currentAmmountOfParticles <= maxAmmountOfParticles)
-        {
             GameObject newSmoke = Instantiate(Smoke, new Vector2(transform.position.x + randSpawnRange, transform.position.y + randSpawnRange), Quaternion.identity);
             SpriteRenderer newSp = newSmoke.GetComponent<SpriteRenderer>();
             newSp.color = new Color(1, 1, 1, currAlpha - spreadDecrease);
-            currentAmmountOfParticles++;
-        }
     }
 
     void ManageDeletion()
@@ -83,7 +77,6 @@ public class SmokeClass : MonoBehaviour
         if (spriteRenderer.color.a <= 0)
         {
             Destroy(gameObject);
-            currentAmmountOfParticles--;
         }
     }
 }

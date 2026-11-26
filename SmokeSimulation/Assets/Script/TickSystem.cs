@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class TickSystem : MonoBehaviour
 {
+    public static bool hasTickChanged;
+
     public static int currentTick;
     public static int changedTick;
 
@@ -10,13 +12,14 @@ public class TickSystem : MonoBehaviour
 
     void Start()
     {
-        timeForTickInSeconds = 0.01f;
+        timeForTickInSeconds = 0.5f;
     }
 
     // Update is called once per frame
     void Update()
     {
         Timer();
+        HasTickChanged();
     }
 
     public float Timer()
@@ -31,15 +34,15 @@ public class TickSystem : MonoBehaviour
         return currentTick;
     }
 
-    public static bool HasTickChanged()
+    public void HasTickChanged()
     {
         if (changedTick == currentTick)
-            return false;
+            hasTickChanged = false;
 
         else
         {
             changedTick = currentTick;
-            return true;
+            hasTickChanged = true;
         }
     }
 }

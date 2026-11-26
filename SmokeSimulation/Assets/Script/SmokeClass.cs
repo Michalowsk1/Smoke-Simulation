@@ -78,10 +78,6 @@ public class SmokeClass : MonoBehaviour
             GameObject newSmoke = Instantiate(Smoke, new Vector2(transform.position.x + Random.Range(-randSpawnRange, randSpawnRange), transform.position.y + Random.Range(-randSpawnRange, randSpawnRange)), Quaternion.identity);
             currAlpha = currAlpha - 0.01f;
 
-            //randDir = new Vector2(Random.Range(-randRange, randRange), Random.Range(-randRange, randRange));
-            //Rigidbody2D newrb = newSmoke.GetComponent<Rigidbody2D>();
-            //newrb.linearVelocity = new Vector2(rigidBody2D.linearVelocityX + randDir.x, rigidBody2D.linearVelocityY + randDir.y);
-
             SpriteRenderer newSp = newSmoke.GetComponent<SpriteRenderer>();
             newSp.color = new Color(1, 1, 1, currAlpha - spreadDecrease);
         }

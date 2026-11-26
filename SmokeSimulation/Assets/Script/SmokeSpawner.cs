@@ -17,8 +17,6 @@ public class SmokeSpawner : MonoBehaviour
             worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             worldPos.z = 0;
             Instantiate(Smoke, worldPos, Quaternion.identity);
-            worldPos.y = 10;
-            Instantiate(Smoke, worldPos, Quaternion.identity);
         }
     }
 }

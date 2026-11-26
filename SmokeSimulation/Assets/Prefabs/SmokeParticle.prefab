@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7543011277853918133}
-  - component: {fileID: 7205265509429936971}
   - component: {fileID: 602781450253969269}
-  - component: {fileID: 1361413878156864887}
+  - component: {fileID: 8838106315432810327}
   m_Layer: 0
   m_Name: SmokeParticle
   m_TagString: Untagged
@@ -29,33 +28,11 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.025, y: 0.025, z: 0.025}
+  m_LocalScale: {x: 0.035, y: 0.035, z: 0.035}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7205265509429936971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4105944772205854472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d222f31cd0c59e4e9383ca25fb8ff80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SmokeClass
-  Smoke: {fileID: 4105944772205854472}
-  randDir: {x: 0, y: 0}
-  randRange: 0.025
-  currAlpha: 0
-  alphaDecreaser: 0.0025
-  alphaDecreaserIncrement: 0.0075
-  spreadDecrease: 0.0075
-  randSpawnRange: 0.001
-  currentAmmountOfParticles: 0
-  maxAmmountOfParticles: 100
 --- !u!212 &602781450253969269
 SpriteRenderer:
   serializedVersion: 2
@@ -115,30 +92,27 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!50 &1361413878156864887
-Rigidbody2D:
-  serializedVersion: 5
+--- !u!114 &8838106315432810327
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4105944772205854472}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 0.0001
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fd794c519ac1ed41b74a10b8b085172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SmokeClassUser
+  Smoke: {fileID: 4105944772205854472}
+  randDir: {x: 0, y: 0}
+  randRange: 0
+  xVel: 0
+  yVel: 0
+  minVel: 0
+  velAdjuster: 0
+  currAlpha: 0
+  alphaDecreaser: 0
+  alphaDecreaserIncrement: 0
+  spreadDecrease: 0
+  randSpawnRange: 0

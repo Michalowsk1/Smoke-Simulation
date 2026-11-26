@@ -116,3 +116,6 @@ MonoBehaviour:
   alphaDecreaserIncrement: 0
   spreadDecrease: 0
   randSpawnRange: 0
+  computeShader: {fileID: 7200000, guid: 907f16a616d532d4b828bf8443e727ca, type: 3}
+  partileList: []
+  renderers: []

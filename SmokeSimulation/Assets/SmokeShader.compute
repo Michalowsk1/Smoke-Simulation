@@ -5,22 +5,31 @@
 // with cs.SetTexture
 RWTexture2D<float4> Result;
 
-[numthreads(512,512,1)]
 
 struct SmokeParticle
 {
     float2 particlePos;
-    float2 particleVelocity;
-    float2 particleAlpha;      
+    float2 particleVel;
+    float4 particleColor;      
 };
 
 RWStructuredBuffer<SmokeParticle> particles;
-float _xVel;
-float _yVel;
+uint _particleCount;
+float _currAlpha;
+float _alphaDecreaser;
 
+[numthreads(64, 1, 1)]
 void CSMain (uint3 id : SV_DispatchThreadID)
 {
     // TODO: insert actual code here!
-
-    Result[id.xy] = float4(id.x & id.y, (id.x & 15)/15.0, (id.y & 15)/15.0, 0.0);
+    if (id.x >= _particleCount)
+        return;
+    
+    SmokeParticle particle = particles[id.x];
+    
+    particle.particlePos += particle.particleVel;
+    
+    particle.particleColor = float4(1, 1, 1, 1);
+    
+    particles[id.x] = particle;
 }

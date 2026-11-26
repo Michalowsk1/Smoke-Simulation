@@ -12,11 +12,11 @@ public class SmokeClassUser : SmokeClass
     // Update is called once per frame
     void Update()
     {
-        ManageMovement();
+        //ManageMovement();
         ManageTransparency();
-        ManageDeletion();
+        //ManageDeletion();
 
-        if (TickSystem.HasTickChanged())
-            ManageSpread();
+        //if (TickSystem.HasTickChanged())
+            //ManageSpread();
     }
 }

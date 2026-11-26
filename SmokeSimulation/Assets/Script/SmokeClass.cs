@@ -1,4 +1,5 @@
-using Unity.VisualScripting;
+using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
 public class SmokeClass : MonoBehaviour
@@ -24,22 +25,36 @@ public class SmokeClass : MonoBehaviour
     public float spreadDecrease;
     public float randSpawnRange;
 
+    [Header("GPUInstancing")]
+    public Mesh mesh;
+    public Material material;
+
+    public struct InstanceData
+    {
+        public Vector2 position;
+        public Color color;
+    }
+
+    List<InstanceData> instances = new List<InstanceData>();
+    List<Matrix4x4> matrices = new List<Matrix4x4>();
+    RenderParams rp;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        SetUpGPUInstancing();
+        SetUpBodiesAndValues();
+        SetMinVelocities();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
+        ManageMovement();
     }
 
     public void SetUpBodiesAndValues()
     {
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-
         minVel = 0.001f;
         velAdjuster = 0.005f;
 
@@ -54,12 +69,36 @@ public class SmokeClass : MonoBehaviour
         spreadDecrease = 0.0075f; //how much alpha is decreased from new smoke particle
     }
 
-    public void ManageTransparency()
+    public void SetUpGPUInstancing()
     {
-        currAlpha = gameObject.GetComponent<SpriteRenderer>().color.a - alphaDecreaser;
-        spriteRenderer.color = new Color(1, 1, 1, currAlpha);
+        GameObject primite = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        mesh = primite.GetComponent<MeshFilter>().sharedMesh;
+        Destroy( primite );
 
-        alphaDecreaser = (alphaDecreaserIncrement * GetMagnitude(xVel, yVel) + Random.Range(0,0.01f));
+        material.enableInstancing = true;
+
+        rp = new RenderParams(material);
+        rp.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        rp.receiveShadows = false;
+    }
+
+    public void SpawnParticle()
+    {
+        Vector3 worldPos;
+
+        worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        worldPos.z = 0;
+        instances.Add(new InstanceData { position = worldPos, color = new Color(1,1,1,1)});
+    }
+
+
+
+    public float ManageTransparency(float alpha)
+    {
+        alphaDecreaser = alphaDecreaserIncrement * GetMagnitude(xVel, yVel) + Random.Range(0,0.01f);
+
+        alpha = alpha - alphaDecreaser;
+        return alpha;
     }
 
     public void ManageMovement()
@@ -68,28 +107,57 @@ public class SmokeClass : MonoBehaviour
         yVel = yVel + (Time.deltaTime * velAdjuster);
         float randomnessX = Random.Range(-randRange, randRange);
         float randomnessY = Random.Range(-randRange, randRange);
-        transform.position = new Vector2(transform.position.x + ((xVel + WindSystem.windInfluence.x) + randomnessX), transform.position.y + ((yVel + WindSystem.windInfluence.y) + randomnessY));
+
+        matrices.Clear();
+        int currentParticleCount = instances.Count;
+        for(int i = 0; i < currentParticleCount; i++)
+        {
+            InstanceData data = instances[i];
+            data.position += new Vector2(xVel + WindSystem.windInfluence.x + randomnessX, yVel + WindSystem.windInfluence.y + randomnessY);
+            data.color.a = ManageTransparency(data.color.a);
+
+            if (TickSystem.HasTickChanged())
+                ManageSpread(data.position, data.color.a);
+
+            if (data.color.a <= 0)
+            {
+                instances.RemoveAt(i);
+                i--;
+                currentParticleCount--;
+                continue;
+            }
+
+            instances[i] = data;
+
+            matrices.Add(Matrix4x4.TRS(data.position, Quaternion.identity, Vector3.one * 0.035f));
+        }
+
+        if (matrices.Count > 0)
+            Graphics.RenderMeshInstanced(rp, mesh, 0, matrices);
     }
 
-    public void ManageSpread()
+    public void ManageRendering(InstanceData data)
     {
-        if (spriteRenderer.color.a > 0.15)
+        matrices.Add(Matrix4x4.TRS(data.position, Quaternion.identity, Vector3.one * 0.035f));
+
+        Graphics.RenderMeshInstanced(rp, mesh, 0, matrices);
+    }
+
+    public void ManageSpread(Vector2 pos, float alpha)
+    {
+        if (alpha > 0.15)
         {
-            GameObject newSmoke = Instantiate(Smoke, new Vector2(transform.position.x + Random.Range(-randSpawnRange, randSpawnRange), transform.position.y + Random.Range(-randSpawnRange, randSpawnRange)), Quaternion.identity);
+            float randomXpos = pos.x + Random.Range(-randSpawnRange, randSpawnRange);
+            float randomYpos = pos.y + Random.Range(-randSpawnRange, randSpawnRange);
             currAlpha = currAlpha - 0.01f;
 
-            //randDir = new Vector2(Random.Range(-randRange, randRange), Random.Range(-randRange, randRange));
-            //Rigidbody2D newrb = newSmoke.GetComponent<Rigidbody2D>();
-            //newrb.linearVelocity = new Vector2(rigidBody2D.linearVelocityX + randDir.x, rigidBody2D.linearVelocityY + randDir.y);
-
-            SpriteRenderer newSp = newSmoke.GetComponent<SpriteRenderer>();
-            newSp.color = new Color(1, 1, 1, currAlpha - spreadDecrease);
+            instances.Add(new InstanceData { position = new Vector2(randomXpos, randomYpos), color = new Color(1, 0, 1, currAlpha)});
         }
     }
 
-    public void ManageDeletion()
+    public void ManageDeletion(float alpha, int i)
     {
-        if (spriteRenderer.color.a <= 0)
+        if (alpha <= 0)
         {
             Destroy(gameObject);
         }

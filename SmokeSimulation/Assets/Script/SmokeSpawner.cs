@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class SmokeSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject Smoke;
-    private Vector3 worldPos;
+    [SerializeField] private SmokeClass smokeClass;
     void Start()
     {
         
@@ -14,11 +13,7 @@ public class SmokeSpawner : MonoBehaviour
 
         if(Input.GetMouseButtonDown(0))
         {
-            worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            worldPos.z = 0;
-            Instantiate(Smoke, worldPos, Quaternion.identity);
-            worldPos.y = 10;
-            Instantiate(Smoke, worldPos, Quaternion.identity);
+            smokeClass.SpawnParticle();
         }
     }
 }

@@ -314,7 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: befdbd13054710148bc3c13ba934fdbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SmokeSpawner
-  Smoke: {fileID: 4105944772205854472, guid: 1b5980f5cd92b3242811030f38bcd8d2, type: 3}
+  smokeClass: {fileID: 1098604338}
 --- !u!1 &751229625
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,6 +417,8 @@ MonoBehaviour:
   alphaDecreaserIncrement: 0
   spreadDecrease: 0
   randSpawnRange: 0
+  mesh: {fileID: 0}
+  material: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -16,8 +17,8 @@ public class SmokeClass : MonoBehaviour
     public float velAdjuster;
 
     [Header("Transparency Variables")]
+    float alphaDecreaser;
     public float currAlpha;
-    public float alphaDecreaser;
     public float alphaDecreaserIncrement;
 
     [Header("Sreading Variables")]
@@ -29,8 +30,7 @@ public class SmokeClass : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        SetUpBodiesAndValues();
-        SetMinVelocities();
+
     }
 
     // Update is called once per frame
@@ -62,27 +62,37 @@ public class SmokeClass : MonoBehaviour
         currAlpha = sp.color.a - alphaDecreaser;
         sp.color = new Color(1, 1, 1, currAlpha);
 
-        alphaDecreaser = (alphaDecreaserIncrement * GetMagnitude(xVel, yVel) + Random.Range(0,0.01f));
+        alphaDecreaser = (alphaDecreaserIncrement * GetMagnitude(xVel, yVel) + Random.Range(0,0.001f));
     }
 
     public void ManageMovement()
     {
         xVel = xVel + (Time.deltaTime * velAdjuster);
         yVel = yVel + (Time.deltaTime * velAdjuster);
+
         float randomnessX = Random.Range(-randRange, randRange);
         float randomnessY = Random.Range(-randRange, randRange);
-        transform.position = new Vector2(transform.position.x + ((xVel + WindSystem.windInfluence.x) + randomnessX), transform.position.y + ((yVel + WindSystem.windInfluence.y) + randomnessY));
+        float XPos = 0, YPos = 0;
+
+        XPos = transform.position.x + xVel * WindSystem.windInfluence.x;
+
+        YPos = transform.position.y + ((yVel + WindSystem.windInfluence.y) + randomnessY);
+
+        transform.position = new Vector2(XPos, YPos);
     }
 
-    public void ManageSpread(SpriteRenderer sp)
+    public void ManageSpread(SpriteRenderer sp , int ammountOfSmokeNearby)
     {
         if (sp.color.a > 0.15)
         {
             GameObject newSmoke = Instantiate(Smoke, new Vector2(transform.position.x + Random.Range(-randSpawnRange, randSpawnRange), transform.position.y + Random.Range(-randSpawnRange, randSpawnRange)), Quaternion.identity);
-            currAlpha = currAlpha - 0.01f;
+            if(ammountOfSmokeNearby <= 5)
+                currAlpha = currAlpha - spreadDecrease;
+            else
+                currAlpha = currAlpha - (alphaDecreaser /  ammountOfSmokeNearby);
 
             SpriteRenderer newSp = newSmoke.GetComponent<SpriteRenderer>();
-            newSp.color = new Color(1, 1, 1, currAlpha - spreadDecrease);
+            newSp.color = new Color(1, 1, 1, currAlpha);
 
         }
     }

@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 7543011277853918133}
   - component: {fileID: 602781450253969269}
   - component: {fileID: 167257230307383469}
-  m_Layer: 0
+  - component: {fileID: 5036966508167726190}
+  m_Layer: 1
   m_Name: SmokeParticle
-  m_TagString: Untagged
+  m_TagString: Smoke
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,15 +108,51 @@ MonoBehaviour:
   Smoke: {fileID: 4105944772205854472}
   spriteRenderer: {fileID: 0}
   randDir: {x: 0, y: 0}
-  randRange: 0.005
+  randRange: 0.015
   xVel: 0
   yVel: 0
   minVel: 0.001
   velAdjuster: 0.0075
   currAlpha: 0
-  alphaDecreaser: 0.0005
-  alphaDecreaserIncrement: 0.0001
-  spreadDecrease: 0.001
+  alphaDecreaserIncrement: 0.15
+  spreadDecrease: 0.05
   randSpawnRange: 0.001
   ChildrenSpawned: 0
-  MaxAmmountOfChildren: 15
+  MaxAmmountOfChildren: 7
+  AmmountOfSmokeNearby: 0
+--- !u!58 &5036966508167726190
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4105944772205854472}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.50000006

@@ -12,7 +12,7 @@ public class TickSystem : MonoBehaviour
 
     void Start()
     {
-        timeForTickInSeconds = 0.5f;
+        timeForTickInSeconds = 0.15f;
     }
 
     // Update is called once per frame

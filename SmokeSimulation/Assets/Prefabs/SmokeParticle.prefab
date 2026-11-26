@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7543011277853918133}
   - component: {fileID: 602781450253969269}
-  - component: {fileID: 8838106315432810327}
+  - component: {fileID: 167257230307383469}
   m_Layer: 0
   m_Name: SmokeParticle
   m_TagString: Untagged
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &8838106315432810327
+--- !u!114 &167257230307383469
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,14 +105,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SmokeClassUser
   Smoke: {fileID: 4105944772205854472}
+  spriteRenderer: {fileID: 0}
   randDir: {x: 0, y: 0}
-  randRange: 0
+  randRange: 0.005
   xVel: 0
   yVel: 0
-  minVel: 0
-  velAdjuster: 0
+  minVel: 0.001
+  velAdjuster: 0.0075
   currAlpha: 0
-  alphaDecreaser: 0
-  alphaDecreaserIncrement: 0
-  spreadDecrease: 0
-  randSpawnRange: 0
+  alphaDecreaser: 0.0005
+  alphaDecreaserIncrement: 0.0001
+  spreadDecrease: 0.001
+  randSpawnRange: 0.001
+  ChildrenSpawned: 0
+  MaxAmmountOfChildren: 15

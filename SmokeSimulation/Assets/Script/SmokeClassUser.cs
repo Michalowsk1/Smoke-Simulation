@@ -2,29 +2,25 @@ using UnityEngine;
 
 public class SmokeClassUser : SmokeClass
 {
-    public int kidSpawned;
-    public int maxKidsAmmount;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        //SetUpBodiesAndValues();
         SetMinVelocities();
-        SetUpBodiesAndValues();
-
-        kidSpawned = 0;
-        maxKidsAmmount = 10;
     }
 
     // Update is called once per frame
     void Update()
     {
         ManageMovement();
-        ManageTransparency();
-        ManageDeletion();
+        ManageTransparency(spriteRenderer);
+        ManageDeletion(spriteRenderer);
 
-        if (TickSystem.hasTickChanged && kidSpawned < maxKidsAmmount)
+        if (TickSystem.hasTickChanged && ChildrenSpawned < MaxAmmountOfChildren)
         {
-            kidSpawned++;
-            ManageSpread();
+            ChildrenSpawned++;
+            ManageSpread(spriteRenderer);
         }
     }
 }

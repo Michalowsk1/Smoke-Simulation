@@ -5,7 +5,7 @@ public class SmokeClass : MonoBehaviour
 {
     [Header("Objects")]
     [SerializeField] GameObject Smoke;
-    SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
 
     [Header("Movement Variables")]
     public Vector2 randDir;
@@ -23,11 +23,14 @@ public class SmokeClass : MonoBehaviour
     [Header("Sreading Variables")]
     public float spreadDecrease;
     public float randSpawnRange;
+    public int ChildrenSpawned;
+    public int MaxAmmountOfChildren;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        SetUpBodiesAndValues();
+        SetMinVelocities();
     }
 
     // Update is called once per frame
@@ -38,8 +41,6 @@ public class SmokeClass : MonoBehaviour
 
     public void SetUpBodiesAndValues()
     {
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-
         minVel = 0.001f;
         velAdjuster = 0.005f;
 
@@ -52,12 +53,14 @@ public class SmokeClass : MonoBehaviour
         alphaDecreaserIncrement = 0.0075f;
 
         spreadDecrease = 0.0075f; //how much alpha is decreased from new smoke particle
+        ChildrenSpawned = 0;
+        MaxAmmountOfChildren = 10;
     }
 
-    public void ManageTransparency()
+    public void ManageTransparency(SpriteRenderer sp)
     {
-        currAlpha = gameObject.GetComponent<SpriteRenderer>().color.a - alphaDecreaser;
-        spriteRenderer.color = new Color(1, 1, 1, currAlpha);
+        currAlpha = sp.color.a - alphaDecreaser;
+        sp.color = new Color(1, 1, 1, currAlpha);
 
         alphaDecreaser = (alphaDecreaserIncrement * GetMagnitude(xVel, yVel) + Random.Range(0,0.01f));
     }
@@ -71,21 +74,22 @@ public class SmokeClass : MonoBehaviour
         transform.position = new Vector2(transform.position.x + ((xVel + WindSystem.windInfluence.x) + randomnessX), transform.position.y + ((yVel + WindSystem.windInfluence.y) + randomnessY));
     }
 
-    public void ManageSpread()
+    public void ManageSpread(SpriteRenderer sp)
     {
-        if (spriteRenderer.color.a > 0.15)
+        if (sp.color.a > 0.15)
         {
             GameObject newSmoke = Instantiate(Smoke, new Vector2(transform.position.x + Random.Range(-randSpawnRange, randSpawnRange), transform.position.y + Random.Range(-randSpawnRange, randSpawnRange)), Quaternion.identity);
             currAlpha = currAlpha - 0.01f;
 
             SpriteRenderer newSp = newSmoke.GetComponent<SpriteRenderer>();
             newSp.color = new Color(1, 1, 1, currAlpha - spreadDecrease);
+
         }
     }
 
-    public void ManageDeletion()
+    public void ManageDeletion(SpriteRenderer sp)
     {
-        if (spriteRenderer.color.a <= 0)
+        if (sp.color.a <= 0)
         {
             Destroy(gameObject);
         }

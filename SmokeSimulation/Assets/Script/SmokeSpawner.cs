@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class SmokeSpawner : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class SmokeSpawner : MonoBehaviour
     void Update()
     {
 
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) & !EventSystem.current.IsPointerOverGameObject())
         {
             worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             worldPos.z = 0;

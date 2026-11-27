@@ -111,7 +111,7 @@ MonoBehaviour:
   randRange: 0.005
   xVel: 0
   yVel: 0
-  minVel: 0.001
+  minVel: 0
   velAdjuster: 0.05
   windEffectEnhancer: 1.55
   currAlpha: 0

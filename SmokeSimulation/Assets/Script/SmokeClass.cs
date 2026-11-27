@@ -71,10 +71,10 @@ public class SmokeClass : MonoBehaviour
         float randomnessX = Random.Range(0, randRange);
         float randomnessY = Random.Range(0, randRange);
 
-        xVel = xVel + (randomnessX * velAdjuster);
-        yVel = yVel + (randomnessY * velAdjuster);
+        xVel = xVel + WindSystem.windInfluence.x;
+        yVel = yVel + WindSystem.windInfluence.y;
 
-        transform.position += new Vector3(xVel, yVel);
+        transform.position = CalculateNewPos(new Vector2(randomnessX, randomnessY));
     }
 
     public void ManageSpread(SpriteRenderer sp , int ammountOfSmokeNearby)
@@ -106,7 +106,7 @@ public class SmokeClass : MonoBehaviour
         return Mathf.Sqrt((x * x) + (y * y));
     }
 
-    public void SetMinVelocities()
+    public void SetMinVelocities() 
     {
         if(xVel < minVel)
             xVel = minVel;
@@ -115,15 +115,21 @@ public class SmokeClass : MonoBehaviour
             yVel = minVel;
     }
 
-    public Vector3 CalculateVelocity(Vector2 wind)
+    public Vector3 CalculateNewPos(Vector2 random)
     {
 
-        if (wind.x > 0)
-            xVel = Mathf.Abs(xVel * wind.x * windEffectEnhancer);
-        else if (wind.x < 0)
-            xVel = -Mathf.Abs(xVel * wind.x * windEffectEnhancer);
+        if(WindSystem.windInfluence.x < 0)
+            transform.position = new Vector3(transform.position.x + xVel - random.x, transform.position.y);
+        else
+            transform.position = new Vector3(transform.position.x + xVel + random.x, transform.position.y);
 
-        print(xVel);
-            return new Vector3(xVel, yVel, 0);
+        if (WindSystem.windInfluence.y < 0)
+            transform.position = new Vector3(transform.position.x, transform.position.y + yVel - random.y);
+        else
+            transform.position = new Vector3(transform.position.x, transform.position.y + yVel + random.y);
+
+        return transform.position;
+
+
     }
 }

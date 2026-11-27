@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WindSystem
   windDir: {x: 0, y: 0}
-  windIntensity: 0.001
+  windIntensity: 0.0001
 --- !u!4 &751229627
 Transform:
   m_ObjectHideFlags: 0

@@ -8,17 +8,12 @@ public class WindSystem : MonoBehaviour
     void Start()
     {
         windDir = new Vector2(1, 1);
-        windIntensity = 1f;
+        windIntensity = 0.0001f;
     }
 
     // Update is called once per frame
     void Update()
     {
         windInfluence = windDir.normalized * windIntensity;
-    }
-
-    public static Vector2 GetWindPower()
-    {
-        return windInfluence;
     }
 }

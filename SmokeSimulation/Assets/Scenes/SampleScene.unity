@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WindSystem
   windDir: {x: 0, y: 0}
-  windIntensity: 0
+  windIntensity: 0.001
 --- !u!4 &751229627
 Transform:
   m_ObjectHideFlags: 0
@@ -406,17 +406,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SmokeClass
   Smoke: {fileID: 4105944772205854472, guid: 1b5980f5cd92b3242811030f38bcd8d2, type: 3}
+  spriteRenderer: {fileID: 0}
   randDir: {x: 0, y: 0}
   randRange: 0
   xVel: 0
   yVel: 0
   minVel: 0
   velAdjuster: 0
+  windEffectEnhancer: 0
   currAlpha: 0
-  alphaDecreaser: 0
   alphaDecreaserIncrement: 0
   spreadDecrease: 0
   randSpawnRange: 0
+  ChildrenSpawned: 0
+  MaxAmmountOfChildren: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

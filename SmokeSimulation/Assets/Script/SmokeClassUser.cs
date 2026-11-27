@@ -7,7 +7,7 @@ public class SmokeClassUser : SmokeClass
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         AmmountOfSmokeNearby = 0;
-        //SetMinVelocities();
+        SetMinVelocities();
     }
 
     // Update is called once per frame

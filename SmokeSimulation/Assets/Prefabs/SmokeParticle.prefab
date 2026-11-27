@@ -108,17 +108,18 @@ MonoBehaviour:
   Smoke: {fileID: 4105944772205854472}
   spriteRenderer: {fileID: 0}
   randDir: {x: 0, y: 0}
-  randRange: 0.015
+  randRange: 0.005
   xVel: 0
   yVel: 0
   minVel: 0.001
-  velAdjuster: 0.0075
+  velAdjuster: 0.05
+  windEffectEnhancer: 1.55
   currAlpha: 0
-  alphaDecreaserIncrement: 0.15
-  spreadDecrease: 0.05
-  randSpawnRange: 0.001
+  alphaDecreaserIncrement: 0.25
+  spreadDecrease: 0.1
+  randSpawnRange: 0.0001
   ChildrenSpawned: 0
-  MaxAmmountOfChildren: 7
+  MaxAmmountOfChildren: 6
   AmmountOfSmokeNearby: 0
 --- !u!58 &5036966508167726190
 CircleCollider2D:

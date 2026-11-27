@@ -8,7 +8,7 @@ public class WindSystem : MonoBehaviour
     void Start()
     {
         windDir = new Vector2(1, 1);
-        windIntensity = 0.001f;
+        windIntensity = 1f;
     }
 
     // Update is called once per frame

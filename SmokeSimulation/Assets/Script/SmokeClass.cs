@@ -15,6 +15,7 @@ public class SmokeClass : MonoBehaviour
     public float yVel;
     public float minVel;
     public float velAdjuster;
+    public float windEffectEnhancer;
 
     [Header("Transparency Variables")]
     float alphaDecreaser;
@@ -67,18 +68,13 @@ public class SmokeClass : MonoBehaviour
 
     public void ManageMovement()
     {
-        xVel = xVel + (Time.deltaTime * velAdjuster);
-        yVel = yVel + (Time.deltaTime * velAdjuster);
+        float randomnessX = Random.Range(0, randRange);
+        float randomnessY = Random.Range(0, randRange);
 
-        float randomnessX = Random.Range(-randRange, randRange);
-        float randomnessY = Random.Range(-randRange, randRange);
-        float XPos = 0, YPos = 0;
+        xVel = xVel + (randomnessX * velAdjuster);
+        yVel = yVel + (randomnessY * velAdjuster);
 
-        XPos = transform.position.x + xVel * WindSystem.windInfluence.x;
-
-        YPos = transform.position.y + ((yVel + WindSystem.windInfluence.y) + randomnessY);
-
-        transform.position = new Vector2(XPos, YPos);
+        transform.position += new Vector3(xVel, yVel);
     }
 
     public void ManageSpread(SpriteRenderer sp , int ammountOfSmokeNearby)
@@ -117,5 +113,17 @@ public class SmokeClass : MonoBehaviour
 
         if(yVel < minVel)
             yVel = minVel;
+    }
+
+    public Vector3 CalculateVelocity(Vector2 wind)
+    {
+
+        if (wind.x > 0)
+            xVel = Mathf.Abs(xVel * wind.x * windEffectEnhancer);
+        else if (wind.x < 0)
+            xVel = -Mathf.Abs(xVel * wind.x * windEffectEnhancer);
+
+        print(xVel);
+            return new Vector3(xVel, yVel, 0);
     }
 }
